@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+<%- include('header'); -%>
+  <body>
+    <%- include('navbar'); -%>
+    <div class="form-div">
+      <%- include('form_error'); -%>
+      <form class="search-form" action="/home/search" method="post">
+        <h3>Search for an account</h3>
+        <input type="text" name="user_input" value="">
+        <button type="submit" name="search">Search</button>
+      </form>
+    </div>
+    <%- include('data-display'); %>
+  </body>
+</html>

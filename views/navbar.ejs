@@ -1,0 +1,16 @@
+<div class="nav">
+  <div class="nav-links">
+    <% if (!session) {%>
+      <div class="">
+        <span><a href="/" >Login</a></span>
+        <span class="title"><%= title %></span>
+        <span><a href="register" >Register</a></span>
+      </div>
+    <% } else { %>
+      <span><a href="/home/search">Search</a></span>
+      <span><a href="/home/add_accounts">Add</a></span>
+      <span><a href="/home">My Accounts</a></span>
+      <span><a href="/home/logout">Logout(<%= session.username %>)</a></span>
+    <% } %>
+  </div>
+</div>

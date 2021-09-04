@@ -1,0 +1,11 @@
+test.js
+test.json
+test2.js
+test3.js
+hey.csv
+config.json
+.DS_Store
+/bin
+package-lock.json
+/node_modules
+hashing.js

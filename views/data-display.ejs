@@ -1,0 +1,35 @@
+<% if(!data) { %>
+  <div class="">
+    <p><%= message %></p>
+  </div>
+<% } else { %>
+  <div class="data-display">
+    <% data.forEach( account => { %>
+      <div class="row-div" id=<%= account._id%>>
+        <div class="data-div">
+          <h4> <b><u>Platform Name :</u></b> <%= account.platform_name %></h4>
+          <p><b><u>Username :</u></b> <%= account.username %></p>
+          <p><b><u>Password :</u></b> <%= account.encrypted_password %></p>
+          <p><b><u>Notes :</u></b> <%= account.notes %></p>
+          <p><b><u>Upload Date :</u></b> <%= account.upload_date %></p>
+        </div>
+        <div class="delete-btn-div">
+          <button class= "delete-btn" id=<%= account._id%> type="" name="button"> 🗑️</button>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<script>
+  $(".delete-btn").click(function(){
+    if(!confirm('The following account information will be deletd permenantly.'))return;
+    let divId = this.id;
+    $(`#${divId}`).remove();
+    $.post("/home", {deletedItem: divId}).done(function(){
+    }).fail(function(e){
+      console.log("An error has occured : ", e);
+    })
+  })
+
+</script>

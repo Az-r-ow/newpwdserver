@@ -1,0 +1,82 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #280137;
+  color: #7B9BCC;
+}
+
+button {
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 1em;
+}
+
+input[type="text"], input[type="password"]{
+  font-size: 0.75em;
+  /* margin: 0.5em;  */
+}
+
+span.title {
+  font-size: 2em;
+  color: red;
+}
+
+.error-div {
+  color: black;
+}
+.nav {
+  display: flex;
+  background-color: #20002C;
+  opacity: 1;
+  font-size: 1.5em;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  padding: 1em;
+  height: 3em;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 0.7em;
+}
+
+.nav a:hover {
+  /* background-color: #624C6B; */
+  opacity: 0.5; 
+}
+
+.nav span {
+  padding: 1em;
+}
+
+.form-div{
+  text-align: center;
+  padding: 2em;
+}
+
+.pwd-input-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main h1{
+  text-align: center;
+}
+
+.row-div{
+  padding: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #969696;
+}
+
+form{
+  margin: auto;
+  font-size: 1.5em;
+}
+
+a {
+  color: #00B7FF;
+}
