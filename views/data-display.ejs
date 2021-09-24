@@ -3,7 +3,18 @@
     <p><%= message %></p>
   </div>
 <% } else { %>
+
   <div class="data-display">
+    <form class="" action="" method="post" id="sort-form">
+      <label for="sort">Sort By :</label>
+      <select class="data-sort" name="sort" id="data-sort" >
+        <option value="default" id="default">Default</option>
+        <option value="platform-name" id="platform-name">Platform Name</option>
+        <option value="username" id="username">Username</option>
+        <option value="recent" id="recent">Most Recent</option>
+        <option value="oldest" id="oldest">Oldest</option>
+      </select>
+    </form>
     <% data.forEach( account => { %>
       <div class="row-div" id=<%= account._id%>>
         <div class="data-div">
@@ -13,23 +24,19 @@
           <p><b><u>Notes :</u></b> <%= account.notes %></p>
           <p><b><u>Upload Date :</u></b> <%= account.upload_date %></p>
         </div>
-        <div class="delete-btn-div">
-          <button class= "delete-btn" id=<%= account._id%> type="" name="button"> 🗑️</button>
+        <div class="delete-btn-div" >
+          <button class= "delete-btn" id=<%= account._id %> type="" name="button"> 🗑️</button>
         </div>
       </div>
     <% }) %>
   </div>
 <% } %>
 
-<script>
-  $(".delete-btn").click(function(){
-    if(!confirm('The following account information will be deletd permenantly.'))return;
-    let divId = this.id;
-    $(`#${divId}`).remove();
-    $.post("/home", {deletedItem: divId}).done(function(){
-    }).fail(function(e){
-      console.log("An error has occured : ", e);
-    })
-  })
+<script src="/javascripts/data-display.js" charset="utf-8"></script>
 
+<script type="text/javascript">
+  <% if(sort_type){ %>
+    let sort_type = '<%= sort_type %>';
+    $(`#${sort_type}`).prop('selected', true);
+  <% } %>
 </script>

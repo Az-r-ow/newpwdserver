@@ -9,3 +9,6 @@ config.json
 package-lock.json
 /node_modules
 hashing.js
+github_token.txt
+hey1.csv
+test4.js

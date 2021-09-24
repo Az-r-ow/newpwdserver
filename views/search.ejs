@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
-<%- include('header'); -%>
+<%- include('header'); %>
   <body>
-    <%- include('navbar'); -%>
+    <%- include('navbar'); %>
     <div class="form-div">
-      <%- include('form_error'); -%>
-      <form class="search-form" action="/home/search" method="post">
+      <%- include('form_error'); %>
+      <form class="search-form" action="/home/search" method="post" id="search-form">
         <h3>Search for an account</h3>
-        <input type="text" name="user_input" value="">
+        <input type="text" name="user_input" id="user_input">
         <button type="submit" name="search">Search</button>
       </form>
     </div>
     <%- include('data-display'); %>
+    <script type="text/javascript">
+    <% if(session){ %>
+      <% if (session.last_search){ %>
+      let prev_user_input = '<%= session.last_search %>';
+      $("#user_input").val(prev_user_input);
+      <% } %>
+    <% } %>
+    </script>
   </body>
 </html>

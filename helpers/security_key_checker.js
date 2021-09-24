@@ -48,5 +48,5 @@
      }
    })
  }else{
-   console.log("Crypto requirements already initialized !")
+   console.log("> Crypto requirements already initialized !")
  }

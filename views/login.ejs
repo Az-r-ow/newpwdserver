@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
 <html>
-<%- include('header'); -%>
+<%- include('header'); %>
   <body>
-    <%- include('navbar') -%>
+    <%- include('navbar'); %>
     <div class="form-div">
-      <%- include('form_error') -%>
+      <%- include('form_error'); %>
       <form class="login-form" action="/" method="post">
         <label for="username">Username :</label><br>
         <input type="text" required name="username" value=""><br>
@@ -26,8 +26,6 @@
       // toggle the type attribute
    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
    password.setAttribute('type', type);
-   // toggle the eye slash icon
-   this.classList.toggle('fa-eye-slash');
 
  });
   </script>

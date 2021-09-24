@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
-    <%- include('header'); -%>
+    <%- include('header'); %>
   <body>
-    <%- include('navbar'); -%>
+    <%- include('navbar'); %>
     <div class="form-div">
-      <%- include('form_error'); -%>
+      <%- include('form_error'); %>
       <form class="" action="/home/add_accounts" autocomplete="off" method="post">
         <label for="platform_name">Platform :</label><br>
         <input type="text" required name="platform_name" value=""><br>
@@ -16,13 +16,30 @@
         <label for="password">Password :</label><br>
         <input type="text" required name="password" value=""><br>
         <label for="notes">Notes :</label><br>
-        <textarea name="notes" rows="8" cols="50"></textarea><br>
+        <textarea name="notes" ></textarea><br>
         <button type="submit" name="submit-button">Add</button>
       </form>
+      <div class="csv-instructions-div">
+        <div class="">
+          <p>⚠️ The CSV file you will be uploading should have three main columns : </p>
+          <ul>
+            <li>platform_name</li>
+            <li>username</li>
+            <li>password</li>
+          </ul>
+          <p>They should be named respectively the same as shown above !</p>
+          <p>The passwords should not be encrypted !</p>
+        </div>
+      </div>
       <form class="upload-form" action="/home/upload_csv" enctype="multipart/form-data" method="post">
         <label for="">Upload a csv file :</label>
         <input type="file" id="csv" name="accounts" accept=".csv"><br>
-        <button type="button" id="upload" name="button">Upload file</button>
+        <div class="upload-status-div">
+          <div class="upload-status-div-2">
+            <span id="upload-status"></span>
+            <button type="button" id="upload" name="button">Upload file</button>
+          </div>
+        </div>
       </form>
     </div>
   </body>
@@ -33,22 +50,30 @@
     $('#csv').on('change', function(event){
       let csvInput = event.target;
       let file = csvInput.files[0];
+      if(!file)return
       Papa.parse(file, {
         complete: function(results){
           csv_data = results.data;
-          console.log('Completed !');
         }
       })
     })
 
     $('#upload').on('click', function(){
       if(!csv_data.length)return
-      $.post('/home/upload_csv', {csv_data}).done(function(data){
-        console.log('The data has been sent to the backend for checking.')
-      }).fail(function(e){
-        console.log('An error has occured while sending the data to the backend : ', e);
-      })
+      $.post('/home/upload_csv', {csv_data}, async function(data){
+        if(data.error){
 
+          $('#upload-status').text(data.error);
+          $('.upload-status-div-2').css('background-color', 'red');
+          $('.upload-form').trigger("reset");
+
+        }else if(data.success_message){
+          $('#upload-status').text(data.success_message);
+          $('.upload-status-div-2').css('background-color', 'green');
+          $('.upload-form').trigger("reset");
+        }
+      }, 'json');
     })
+
   </script>
 </html>

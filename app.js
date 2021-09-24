@@ -44,7 +44,6 @@ const checkAuthentication = (req, res, next) => {
   if(!req.session.auth){
     res.redirect('/');
   }else{
-    console.log('You are logged in !')
     next();
   }
 }
