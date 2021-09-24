@@ -90,17 +90,13 @@ const encrypt = (password, key, iv) => {
 
    let sorted_data;
 
-   console.log('sorting type : ', sorting_type)
-
    switch (sorting_type) {
 
      case 'default':
-     console.log('default has been triggered');
        sorted_data = data;
        break;
 
     case 'platform-name':
-    console.log('platform-name has been triggered.')
       sorted_data = data.sort((a, b) => {
         let stringA = a.platform_name.toUpperCase();
         let stringB = b.platform_name.toUpperCase();
@@ -108,50 +104,36 @@ const encrypt = (password, key, iv) => {
         return (stringA < stringB) ? - 1 : 0;
       })
 
-      console.log(sorted_data);
-
       break;
 
     case 'username':
-    console.log('Username has been triggered.')
       sorted_data = data.sort((a, b) => {
         let stringA = a.username.toUpperCase();
         let stringB = b.username.toUpperCase();
 
         return (stringA < stringB) ? - 1 : 0;
       });
-      console.log(sorted_data);
 
       break;
 
     case 'oldest':
-    console.log('Oldest has been triggered.')
       sorted_data = data.sort((a, b) => {
         return new Date(a.upload_date) - new Date(b.upload_date);
       })
 
-      console.log(sorted_data);
-
       break;
 
     case 'recent':
-    console.log('Recent has been triggered.')
       sorted_data = data.sort((a, b) => {
         return b.upload_date - a.upload_date;
       });
 
-      console.log(sorted_data);
-
-
       break;
 
      default:
-     console.log('Default has been triggered.')
      sorted_data = data;
      break;
    }
-   console.log('this has been triggered');
-   console.log('sorted_data => ', sorted_data); 
    return sorted_data;
  }
 
