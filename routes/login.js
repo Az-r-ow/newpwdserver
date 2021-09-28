@@ -39,11 +39,6 @@ router.post('/', async function(req, res, next){
 
     if(!pwd_match)return res.render('login', {title: 'Login', session: false, error: 'Wrong Password !'});
 
-
-    console.log(results)
-
-    console.log('userid => ', user._id);
-
     req.session.user_id = user._id.toString();
     console.log(`Your session userId is ${req.session.userId}`)
     req.session.username = user.username;

@@ -42,38 +42,38 @@
         </div>
       </form>
     </div>
-  </body>
-  <script type="text/javascript">
+    <script type="text/javascript">
 
-    let csv_data = []
+      let csv_data = []
 
-    $('#csv').on('change', function(event){
-      let csvInput = event.target;
-      let file = csvInput.files[0];
-      if(!file)return
-      Papa.parse(file, {
-        complete: function(results){
-          csv_data = results.data;
-        }
+      $('#csv').on('change', function(event){
+        let csvInput = event.target;
+        let file = csvInput.files[0];
+        if(!file)return
+        Papa.parse(file, {
+          complete: function(results){
+            csv_data = results.data;
+          }
+        })
       })
-    })
 
-    $('#upload').on('click', function(){
-      if(!csv_data.length)return
-      $.post('/home/upload_csv', {csv_data}, async function(data){
-        if(data.error){
+      $('#upload').on('click', function(){
+        if(!csv_data.length)return
+        $.post('/home/upload_csv', {csv_data}, async function(data){
+          if(data.error){
 
-          $('#upload-status').text(data.error);
-          $('.upload-status-div-2').css('background-color', 'red');
-          $('.upload-form').trigger("reset");
+            $('#upload-status').text(data.error);
+            $('.upload-status-div-2').css('background-color', 'red');
+            $('.upload-form').trigger("reset");
 
-        }else if(data.success_message){
-          $('#upload-status').text(data.success_message);
-          $('.upload-status-div-2').css('background-color', 'green');
-          $('.upload-form').trigger("reset");
-        }
-      }, 'json');
-    })
+          }else if(data.success_message){
+            $('#upload-status').text(data.success_message);
+            $('.upload-status-div-2').css('background-color', 'green');
+            $('.upload-form').trigger("reset");
+          }
+        }, 'json');
+      })
 
-  </script>
+    </script>
+  </body>
 </html>

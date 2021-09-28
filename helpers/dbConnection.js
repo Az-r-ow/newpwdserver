@@ -4,10 +4,14 @@ const { url } = require('../config.json');
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error'));
+db.on('error',() => {
+  console.error.bind(console, 'connection error');
+  process.kill(1)
+});
+
 db.once('open', async () => {
   console.log("> Successfully connected to the db ");
-})
+});
 
 /**
 * The schemas for the Models
@@ -31,4 +35,4 @@ const userSchema = new mongoose.Schema({
 const Account = mongoose.model('accounts', accountSchema);
 const User = mongoose.model('users', userSchema);
 
-module.exports = {User, Account};
+module.exports = { User, Account };
