@@ -85,6 +85,14 @@ span.title {
   padding: 0.5em;
 }
 
+#register-btn {
+  margin-top: 1em;
+}
+
+#login-btn{
+  margin-top: 1em; 
+}
+
 
 .csv-instructions-div {
   text-align: left;

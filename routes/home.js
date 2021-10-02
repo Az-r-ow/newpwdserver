@@ -210,9 +210,9 @@ router.post('/add_accounts', async function(req, res, next){
     return res.render('add_accounts', local_variables);
   }
 
-  password = await encrypt(password, key, iv)
-
-  let newAccount = new Account({
+  password = await encrypt(password, key, iv);
+  
+    let newAccount = new Account({
     user_id: req.session.user_id ,
     platform_name,
     username,
