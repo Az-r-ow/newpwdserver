@@ -41,8 +41,8 @@ router.get('/', function(req, res, next) {
   }else{
     Account.find({user_id: req.session.user_id}).then(async data => {
 
-      if(!data){
-        local_variables.setMessage('Nothing to be displayed');
+      if(!data.length){
+        local_variables.setMessage('Nothing to be displayed :(');
         return res.render('home', local_variables);
       };
 
@@ -211,7 +211,7 @@ router.post('/add_accounts', async function(req, res, next){
   }
 
   password = await encrypt(password, key, iv);
-  
+
     let newAccount = new Account({
     user_id: req.session.user_id ,
     platform_name,
@@ -257,81 +257,89 @@ router.post('/upload_csv', async function(req, res, next){
   if(headers.filter(header => header.includes('platform_name') || header.includes('password') || header.includes('username')).length < 3){
     console.log('Invalid file format, one of the required columns was not found !');
     return res.json({"error": "Wrong data format !", "success_message": ""});
-  }
+  }else{
+    // Required column
+    const index_platform_name = headers.map((header, index) => {return { header, index }}).filter(item => item.header.includes('platform_name'))[0].index;
 
-  // Required column
-  const index_platform_name = headers.map((header, index) => {return { header, index }}).filter(item => item.header.includes('platform_name'))[0].index;
+    // Required column
+    const index_username = headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('username') && item.header.trim().endsWith('username'))[0].index;
 
-  // Required column
-  const index_username = headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('username') && item.header.trim().endsWith('username'))[0].index;
+    // Required column
+    const index_password = headers.map((header, index) => {return {header, index }}).filter(item => item.header.includes('password') && item.header.trim().endsWith('password'))[0].index;
 
-  // Required column
-  const index_password = headers.map((header, index) => {return {header, index }}).filter(item => item.header.includes('password') && item.header.trim().endsWith('password'))[0].index;
+    // If a notes column is not found,
+    // Notes will all be empty strings in the db
+    const index_notes = headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('notes') && item.header.trim().endsWith('notes')).length === 0 ?
+    null : headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('notes') && item.header.trim().endsWith('notes'))[0].index ;
 
-  // If a notes column is not found,
-  // Notes will all be empty strings in the db
-  const index_notes = headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('notes') && item.header.trim().endsWith('notes')).length === 0 ?
-  null : headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('notes') && item.header.trim().endsWith('notes'))[0].index ;
-
-  // If an upload date column is not found
-  // The current upload date will be inserted in the database instead
-  const index_upload_date = headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('date')).length === 0 ?
-  null : headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('date'))[0].index;
+    // If an upload date column is not found
+    // The current upload date will be inserted in the database instead
+    const index_upload_date = headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('date')).length === 0 ?
+    null : headers.map((header, index) => {return {header, index}}).filter(item => item.header.includes('date'))[0].index;
 
 
-  let accounts_informations = csv_data.slice(1) //Removing the headers
+    let accounts_informations = csv_data.slice(1) //Removing the headers
 
-  let user_id = req.session.user_id;
+    let user_id = req.session.user_id;
 
-  try {
+    try {
 
-    accounts_informations.forEach((row, row_index) => {
+      accounts_informations = accounts_informations.filter(account => account.length);
 
-      let platform_name = row[index_platform_name];
-      //Making sure there's a platform name
-      if(!platform_name.trim())throw `The platform name is missing on row ${row_index + 1} in the csv file`;
+      console.log('Accounts_informations => ', accounts_informations);
+      console.log('Accounts_information.length => ', accounts_informations.length);
 
-      // Usernames are not always required
-      let username = row[index_username];
+      accounts_informations.forEach((row, row_index) => {
 
-      // Making sure the password is not an empty string
-      let password = row[index_password].trim();
-      // Else throwing an error to the user indicating where the password is missing in the file;
-      if(!password)throw `The password is missing on row ${row_index + 1} in the csv file`;
-      let encrypted_password = encrypt(password, key, iv);
+        let platform_name = row[index_platform_name];
 
-      let notes = "";
-      if(index_notes){
-        notes = row[index_notes];
-      }
+        console.log(row)
+        console.log(row[index_platform_name]);
+        //Making sure there's a platform name
+        if(!platform_name)throw `The platform name is missing on row ${row_index + 1} in the csv file`;
 
-      let upload_date = Date.now();
-      if(index_upload_date){
-        upload_date = row[index_upload_date];
-      }
+        // Usernames are not always required
+        let username = row[index_username];
 
-      let newAccount = new Account({
-        user_id,
-        platform_name,
-        username,
-        encrypted_password,
-        notes,
-        upload_date
+        // Making sure the password is not an empty string
+        let password = row[index_password].trim();
+        // Else throwing an error to the user indicating where the password is missing in the file;
+        if(!password)throw `The password is missing on row ${row_index + 1} in the csv file`;
+        let encrypted_password = encrypt(password, key, iv);
+
+        let notes = "";
+        if(index_notes){
+          notes = row[index_notes];
+        }
+
+        let upload_date = Date.now();
+        if(index_upload_date){
+          upload_date = row[index_upload_date];
+        }
+
+        let newAccount = new Account({
+          user_id,
+          platform_name,
+          username,
+          encrypted_password,
+          notes,
+          upload_date
+        })
+
+        newAccount.save().then(() => {
+          console.log('Account saved !');
+        }).catch(e => console.log('An error has occured while saving the account in the db => ', e));
+
       })
 
-      newAccount.save().then(() => {
-        console.log('Account saved !');
-      }).catch(e => console.log('An error has occured while saving the account in the db => ', e));
+    } catch (e) {
+      console.log('An error has occured in the try catch block => ', e);
 
-    })
+      res.json({"error":e, "message": ""})
+    }
 
-  } catch (e) {
-    console.log('An error has occured in the try catch block => ', e);
-
-    res.json({"error":e, "message": ""})
+    return res.json({"error": "", "success_message": "Yay your data has been uploaded"});
   }
-
-  return res.json({"error": "", "success_message": "Yay your data has been uploaded"});
 })
 
 
