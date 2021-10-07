@@ -255,7 +255,13 @@ router.post('/upload_csv', async function(req, res, next){
   let headers = csv_data[0].map(header => header.toLowerCase()); //The headers
 
   if(headers.filter(header => header.includes('platform_name') || header.includes('password') || header.includes('username')).length < 3){
-    console.log('Invalid file format, one of the required columns was not found !');
+
+    let missing_column = !headers.includes('platform_name') ? 'platform_name' :
+                         !headers.includes('password') ? 'password' :
+                         !headers.includes('username') ? 'username' : 'Something';
+
+    console.log(`The ${missing_column} column is missing !`);
+
     return res.json({"error": "Wrong data format !", "success_message": ""});
   }else{
     // Required column
@@ -312,9 +318,14 @@ router.post('/upload_csv', async function(req, res, next){
           notes = row[index_notes];
         }
 
+        //Checking if there's a date field
+        // If the date format is invalid set the upload date to now
         let upload_date = Date.now();
         if(index_upload_date){
           upload_date = row[index_upload_date];
+          if(!Date.parse(upload_date)){
+            upload_date = Date.now();
+          }
         }
 
         let newAccount = new Account({
