@@ -1,14 +1,14 @@
 # Secure Keychain Server
 
 ### Table of Contents :
-- [Video Demo](#video-demo:)
-- [Description](#description:)
-- [File Tree](#file-tree-:)
+- [Video Demo](#video-demo)
+- [Description](#description)
+- [File Tree](#file-tree)
 - [Setting Up and Running](#setup-and-run)
 
-#### Video Demo: https://youtu.be/tdh1oAP5lGg
+#### Video Demo https://youtu.be/tdh1oAP5lGg
 
-#### Description:
+#### Description
 
 My project is an Express web app that can be downloaded and run on any pc. What it will do, is launch a local web application that allows users to create an account in which they can store all their login informations of other social media accounts safely on a remote database. The technologies used are ***node.js***,  ***Express***, ***bcrypt*** (for encypting and decrypting text), ***ejs*** (Embedded JS) for the templates, ***mongoose*** for interacting with the mongodb, ***paparse*** for parsing csv files.  
 
@@ -23,7 +23,7 @@ The user can search for a specific account information by navigating to `/home/s
 Now what's special about this app, is the information will be encrypted on the remote server and  can be only decrypted with that one key and initializing vector stored in the user's `config.json` file. And these credentials are randomly generated and unique.
 
 
-#### File tree :
+#### File tree
 
 ![Project's file tree](https://cdn.discordapp.com/attachments/723136982993207297/892507338227974154/Screen_Shot_2021-09-28_at_9.26.42_PM.png)
 
@@ -88,4 +88,4 @@ You will need a `config.json` file that has the following format :
   }
 }
 ```
-`crypto_requirements` are not necessary unless you already have an account and you'd like to decrypt old passwords with a previously generated key (in this case it would be more efficient to just import your previous config.json file). Otherwise, when the application is ran for the first time it will generate the requirements by itself. 
+`crypto_requirements` are not necessary unless you already have an account and you'd like to decrypt old passwords with a previously generated key (in this case it would be more efficient to just import your previous config.json file). Otherwise, when the application is ran for the first time it will generate the requirements by itself.
