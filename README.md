@@ -1,5 +1,11 @@
 # Secure Keychain Server
 
+### Table of Contents :
+- [Video Demo](#video-demo:)
+- [Description](#description:)
+- [File Tree](#file-tree-:)
+- [Setting Up and Running](#setup-and-run)
+
 #### Video Demo: https://youtu.be/tdh1oAP5lGg
 
 #### Description:
@@ -17,7 +23,7 @@ The user can search for a specific account information by navigating to `/home/s
 Now what's special about this app, is the information will be encrypted on the remote server and  can be only decrypted with that one key and initializing vector stored in the user's `config.json` file. And these credentials are randomly generated and unique.
 
 
-#### Project's file tree :
+#### File tree :
 
 ![Project's file tree](https://cdn.discordapp.com/attachments/723136982993207297/892507338227974154/Screen_Shot_2021-09-28_at_9.26.42_PM.png)
 
@@ -61,4 +67,25 @@ The folder of all the functions and classes that are being used in the routes.
 
 - **app.js:** The main file where everything is being set to place in other words, the core of the project.
 
-> **PS:** There should be a `config.json` file that should be set up in which the *private_key* and the *iv* will be set as well as the link and some information required to connect to the cloud db. 
+> **PS:** There should be a `config.json` file that should be set up in which the *private_key* and the *iv* will be set as well as the link and some information required to connect to the cloud db.
+
+#### Setup and run
+
+To run this local web server you will need :
+- `Node JS`
+- `npm`
+
+Then clone the repo, and install all dependencies using `npm install`.
+You will need a `config.json` file that has the following format :
+
+```json
+{
+  "url": "The url of the mongo database where you wanna store your passwords",
+  "dbName": "The name of the database",
+  "crypto_requirements": {
+    "key": "The key",
+    "iv": "The initializing vector"
+  }
+}
+```
+`crypto_requirements` are not necessary unless you already have an account and you'd like to decrypt old passwords with a previously generated key (in this case it would be more efficient to just import your previous config.json file). Otherwise, when the application is ran for the first time it will generate the requirements by itself. 
