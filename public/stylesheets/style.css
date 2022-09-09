@@ -15,6 +15,13 @@ input[type="text"], input[type="password"]{
   /* margin: 0.5em;  */
 }
 
+.tooltip-inner {
+  background-color: black;
+  font-size: 0.5rem;
+  color: white;
+  padding: 0.25rem;
+}
+
 span.title {
   font-size: 2em;
   color: red;
@@ -90,7 +97,7 @@ span.title {
 }
 
 #login-btn{
-  margin-top: 1em; 
+  margin-top: 1em;
 }
 
 

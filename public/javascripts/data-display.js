@@ -1,3 +1,8 @@
+// Initialize tooltip
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
 $(".delete-btn").click(function(){
   if(!confirm('The following account information will be deletd permenantly.'))return;
   let divId = this.id;
@@ -7,6 +12,16 @@ $(".delete-btn").click(function(){
     console.log("An error has occured : ", e);
   })
 });
+
+$(".copy-btn").click(async function(){
+  let copyText = this.id;
+  await navigator.clipboard.writeText(copyText);
+
+  let tooltipElement = $(this)
+  let tooltip = bootstrap.Tooltip.getInstance(tooltipElement);
+
+  tooltip.setContent({'.tooltip-inner' : 'Copied !'});
+})
 
 $("#sort-form").change(function(){
   console.log("the form has been changed ")

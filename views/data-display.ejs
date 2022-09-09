@@ -24,8 +24,9 @@
           <p><b><u>Notes :</u></b> <%= account.notes %></p>
           <p><b><u>Upload Date :</u></b> <%= account.upload_date %></p>
         </div>
-        <div class="delete-btn-div" >
-          <button class= "delete-btn" id=<%= account._id %> type="" name="button"> 🗑️</button>
+        <div class="btn-div" >
+          <button class="copy-btn" type="button" name="button" data-toggle="tooltip" data-placement="top" title="Copy" id=<%= account.encrypted_password%>> 📄</button>
+          <button class= "delete-btn" data-toggle="tooltip" data-placement="top" title="Delete" id=<%= account._id %> type="" name="button"> 🗑️</button>
         </div>
       </div>
     <% }) %>
