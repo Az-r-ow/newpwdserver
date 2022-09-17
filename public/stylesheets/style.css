@@ -1,7 +1,7 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #280137;
-  color: #7B9BCC;
+  background-color: #DFCFBE;
+  color:  #7B9BCC;
 }
 
 button {
@@ -34,7 +34,7 @@ span.title {
 }
 .nav {
   display: flex;
-  background-color: #20002C;
+  background-color: black;
   opacity: 1;
   font-size: 1.5em;
   align-items: center;
@@ -131,12 +131,33 @@ textarea {
 }
 
 .row-div{
+  /* code from polypane.app */
+
+  transform:
+   perspective(2000px)
+   translate3d(10px, 10px, -100px)
+   scale(0.99, 0.99);
+ border-radius: 20px;
+ border: 5px solid #e6e6e6;
+ box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);
+ transition: 0.4s ease-in-out transform;
+
+  /* My code */
+  background-color: #7B9BCC;
+  color: #DFCFBE;
   padding: 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #969696;
+  border: 1px solid black;
+
+
 }
+
+.row-div:hover {
+  transform: translate3d(0px, 0px, -250px);
+}
+
 
 .data-display {
   display: flex;

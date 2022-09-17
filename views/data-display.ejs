@@ -20,7 +20,7 @@
         <div class="data-div">
           <h4> <b><u>Platform Name :</u></b> <%= account.platform_name %></h4>
           <p><b><u>Username :</u></b> <%= account.username %></p>
-          <p><b><u>Password :</u></b> <%= account.encrypted_password %></p>
+          <p><b><u>Password :</u></b> <%= account.encrypted_password.split('').map(l => l = "*").join('') %></p>
           <p><b><u>Notes :</u></b> <%= account.notes %></p>
           <p><b><u>Upload Date :</u></b> <%= account.upload_date %></p>
         </div>

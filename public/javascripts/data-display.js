@@ -3,16 +3,20 @@ $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(".delete-btn").click(function(){
-  if(!confirm('The following account information will be deletd permenantly.'))return;
-  let divId = this.id;
-  $(`#${divId}`).remove();
-  $.post("/home", {deletedItem: divId}).done(function(){
-  }).fail(function(e){
-    console.log("An error has occured : ", e);
+// On delete button click
+$(".delete-btn").click(async function(){
+  swal("Information", "It will be deleted premenantly.", "information").then((value) => {
+    if (!value) return;
+    let divId = this.id;
+    $(`#${divId}`).remove();
+    $.post("/home", {deletedItem: divId}).done(function(){
+    }).fail(function(e){
+      console.log("An error has occured : ", e);
+    })
   })
 });
 
+// On copy button click 
 $(".copy-btn").click(async function(){
   let copyText = this.id;
   await navigator.clipboard.writeText(copyText);
