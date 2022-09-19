@@ -20,11 +20,12 @@
         <div class="data-div">
           <h4> <b><u>Platform Name :</u></b> <%= account.platform_name %></h4>
           <p><b><u>Username :</u></b> <%= account.username %></p>
-          <p><b><u>Password :</u></b> <%= account.encrypted_password.split('').map(l => l = "*").join('') %></p>
+          <p class="password" hidden><b><u>Password :</u></b> <%= account.encrypted_password%></p>
           <p><b><u>Notes :</u></b> <%= account.notes %></p>
           <p><b><u>Upload Date :</u></b> <%= account.upload_date %></p>
         </div>
         <div class="btn-div" >
+          <button type="button" class="toggle-btn" title="toggle" id=<%= account._id %>>👁️</button>
           <button class="copy-btn" type="button" name="button" data-toggle="tooltip" data-placement="top" title="Copy" id=<%= account.encrypted_password%>> 📄</button>
           <button class= "delete-btn" data-toggle="tooltip" data-placement="top" title="Delete" id=<%= account._id %> type="" name="button"> 🗑️</button>
         </div>

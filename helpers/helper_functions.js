@@ -137,4 +137,8 @@ const encrypt = (password, key, iv) => {
    return sorted_data;
  }
 
-module.exports = {hash, compare_hashes, encrypt, decrypt, sort_data};
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+module.exports = {hash, compare_hashes, encrypt, decrypt, sort_data, sleep};
